@@ -1,0 +1,1063 @@
+{
+	"info": {
+		"_postman_id": "56301407-4221-4d33-994a-d9d2262a0b75",
+		"name": "FakeRESTApib",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41541472"
+	},
+	"item": [
+		{
+			"name": "Activities",
+			"item": [
+				{
+					"name": "Create_football_activity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"let response = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"id\", response.id);\r",
+									"\r",
+									"pm.environment.set(\"title\", response.title);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"title\": \"football\",\r\n  \"dueDate\": \"2025-01-25T15:58:07.989Z\",\r\n  \"completed\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/Activities",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Activities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_football_avtivity_byId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify id is equal to 1\", function () {\r",
+									"    pm.expect(pm.response.json().id).to.eql(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify completed is false\", function () {\r",
+									"    pm.expect(pm.response.json().completed).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify tile is football\", function () {\r",
+									"    pm.expect(pm.response.json().title).to.eql(\"football\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/Activities/{{id}}",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Activities",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update_football_activity_byId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify id is equal to 1\", function () {\r",
+									"    pm.expect(pm.response.json().id).to.eql(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify completed is true\", function () {\r",
+									"    pm.expect(pm.response.json().completed).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify title is football completed\", function () {\r",
+									"    pm.expect(pm.response.json().title).to.eql(\"football_completed\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"title\": \"football_completed\",\r\n  \"dueDate\": \"2025-01-26T15:58:07.989Z\",\r\n  \"completed\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/Activities/{{id}}",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Activities",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_all_activities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"let response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Verify we have 30 records in the response\", function () {\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"    pm.expect(response.length).to.eql(30);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/Activities",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Activities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete_football_activity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/Activities/{{id}}",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Activities",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authors",
+			"item": [
+				{
+					"name": "Create_Author",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"let response = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"id\", response.id);\r",
+									"\r",
+									"pm.environment.set(\"idBook\", response.idBook);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"idBook\": 1,\r\n  \"firstName\": \"Petya\",\r\n  \"lastName\": \"Angelova\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/Authors",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_Author_by_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify id is equal to 1\", function () {\r",
+									"    pm.expect(pm.response.json().id).to.eql(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify id book is equal to 1\", function () {\r",
+									"    pm.expect(pm.response.json().idBook).to.eql(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify first name is Petya\", function () {\r",
+									"    pm.expect(pm.response.json().firstName).to.eql(\"Petya\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify last name is Angelova \", function () {\r",
+									"    pm.expect(pm.response.json().lastName).to.eql(\"Angelova\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/Authors/{{id}}",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Authors",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update_Author_by_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify first name is Teo\", function () {\r",
+									"    pm.expect(pm.response.json().firstName).to.eql(\"Teo\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify last name is Dora \", function () {\r",
+									"    pm.expect(pm.response.json().lastName).to.eql(\"Dora\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"idBook\": 1,\r\n  \"firstName\": \"Teo\",\r\n  \"lastName\": \"Dora\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/Authors/{{id}}",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Authors",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_book_by_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"let response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Verify id of the first element is 1\", function () {\r",
+									"    pm.expect(response[0].id).to.eql(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify idBook of the first element 1\", function () {\r",
+									"    pm.expect(response[0].idBook).to.eql(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify first element have name equal to First Name 1\", function () {\r",
+									"    pm.expect(response[0].firstName).to.eql(\"First Name 1\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify first element have name equal to Last Name 1\", function () {\r",
+									"    pm.expect(response[0].lastName).to.eql(\"Last Name 1\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify id of the second element is 2\", function () {\r",
+									"    pm.expect(response[1].id).to.eql(2);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify idBook of the second element 2\", function () {\r",
+									"    pm.expect(response[1].idBook).to.eql(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify second element have name equal to First Name 2\", function () {\r",
+									"    pm.expect(response[1].firstName).to.eql(\"First Name 2\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify second element have name equal to Last Name 2\", function () {\r",
+									"    pm.expect(response[1].lastName).to.eql(\"Last Name 2\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/Authors/authors/books/{{idBook}}",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Authors",
+								"authors",
+								"books",
+								"{{idBook}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_all_authors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/Authors",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete_author_by_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/Authors/{{id}}",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Authors",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Books",
+			"item": [
+				{
+					"name": "Create_book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"let response = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"id\", response.id)\r",
+									"\r",
+									"pm.test(\"Verify id is equal to 1\", function () {\r",
+									"    pm.expect(pm.response.json().id).to.eql(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify title is equal to TEST\", function () {\r",
+									"    pm.expect(pm.response.json().title).to.eql(\"TEST\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify description\", function () {\r",
+									"    pm.expect(pm.response.json().description).to.eql(\"testdescription\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify page count\", function () {\r",
+									"    pm.expect(pm.response.json().pageCount).to.eql(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify excerpt\", function () {\r",
+									"    pm.expect(pm.response.json().excerpt).to.eql(\"tstex\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"title\": \"TEST\",\r\n  \"description\": \"testdescription\",\r\n  \"pageCount\": 200,\r\n  \"excerpt\": \"tstex\",\r\n  \"publishDate\": \"2025-01-21T17:45:12.357Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/Books",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_book_by_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"let response = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"id\", response.id)\r",
+									"\r",
+									"pm.test(\"Verify id is equal to 1\", function () {\r",
+									"    pm.expect(pm.response.json().id).to.eql(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify title is equal to Book 1\", function () {\r",
+									"    pm.expect(pm.response.json().title).to.eql(\"Book 1\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify description\", function () {\r",
+									"    pm.expect(pm.response.json().description).to.eql(\"Lorem lorem lorem. Lorem lorem lorem. Lorem lorem lorem.\\n\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify page count\", function () {\r",
+									"    pm.expect(pm.response.json().pageCount).to.eql(100);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify excerpt\", function () {\r",
+									"    pm.expect(pm.response.json().excerpt).to.eql(\"Lorem lorem lorem. Lorem lorem lorem. Lorem lorem lorem.\\nLorem lorem lorem. Lorem lorem lorem. Lorem lorem lorem.\\nLorem lorem lorem. Lorem lorem lorem. Lorem lorem lorem.\\nLorem lorem lorem. Lorem lorem lorem. Lorem lorem lorem.\\nLorem lorem lorem. Lorem lorem lorem. Lorem lorem lorem.\\n\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/Books/{{id}}",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Books",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update_book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"let response = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"id\", response.id)\r",
+									"\r",
+									"pm.test(\"Verify id is equal to 1\", function () {\r",
+									"    pm.expect(pm.response.json().id).to.eql(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify title is equal to ABV\", function () {\r",
+									"    pm.expect(pm.response.json().title).to.eql(\"ABV\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify description\", function () {\r",
+									"    pm.expect(pm.response.json().description).to.eql(\"testdescription2\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify page count\", function () {\r",
+									"    pm.expect(pm.response.json().pageCount).to.eql(11);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify excerpt\", function () {\r",
+									"    pm.expect(pm.response.json().excerpt).to.eql(\"tstex2\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"title\": \"ABV\",\r\n  \"description\": \"testdescription2\",\r\n  \"pageCount\": 11,\r\n  \"excerpt\": \"tstex2\",\r\n  \"publishDate\": \"2025-01-21T17:45:12.357Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/Books/{{id}}",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Books",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_all_books",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/Books",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete_book_by_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/Books/{{id}}",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"Books",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CoverPhotos",
+			"item": [
+				{
+					"name": "Create_Coverphotos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"let response = pm.response.json();\r",
+									"\r",
+									"pm.environment.set(\"id\", response.id)\r",
+									"\r",
+									"pm.test(\"Verify id is equal to 1\", function () {\r",
+									"    pm.expect(pm.response.json().id).to.eql(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify idBook is equal to 1\", function () {\r",
+									"    pm.expect(pm.response.json().idBook).to.eql(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify url\", function () {\r",
+									"    pm.expect(pm.response.json().url).to.eql(\"www.test.com\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"idBook\": 1,\r\n  \"url\": \"www.test.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/CoverPhotos",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"CoverPhotos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_Coverphotos_by_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify id is equal to 1\", function () {\r",
+									"    pm.expect(pm.response.json().id).to.eql(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify idBook is equal to 1\", function () {\r",
+									"    pm.expect(pm.response.json().idBook).to.eql(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify url\", function () {\r",
+									"    pm.expect(pm.response.json().url).to.eql(\"https://placeholdit.imgix.net/~text?txtsize=33&txt=Book 1&w=250&h=350\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/CoverPhotos/{{id}}",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"CoverPhotos",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_Coverphotos_by_idBook",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify id is equal to 1\", function () {\r",
+									"    pm.expect(pm.response.json().id).to.eql(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify idBook is equal to 1\", function () {\r",
+									"    pm.expect(pm.response.json().idBook).to.eql(1);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify url\", function () {\r",
+									"    pm.expect(pm.response.json().url).to.eql(\"https://placeholdit.imgix.net/~text?txtsize=33&txt=Book 1&w=250&h=350\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/CoverPhotos/{{idBook}}",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"CoverPhotos",
+								"{{idBook}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_all_Coverphotos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://fakerestapi.azurewebsites.net/api/v1/CoverPhotos",
+							"protocol": "https",
+							"host": [
+								"fakerestapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v1",
+								"CoverPhotos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
